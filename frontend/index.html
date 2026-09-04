@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChainBallot</title>
+    <meta name="description" content="ChainBallot — Securing Every Vote, Verifying Every Result." />
+    <meta property="og:title" content="ChainBallot" />
+    <meta property="og:description" content="Securing Every Vote, Verifying Every Result." />
+
+    <!-- Fuentes futuristas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      ===================================================================
+      ANTI-FOUC SCRIPT — Cero destellos de renderizado
+      ===================================================================
+      Ejecuta ANTES del DOM: lee la preferencia guardada en localStorage
+      y aplica la clase .dark en <html> antes de que el navegador pinte
+      cualquier pixel. Esto garantiza cero Flash of Unstyled Theme (FOUC).
+
+      Flujo:
+      1. Lee localStorage("theme-preference").
+      2. Si es "dark" → agrega .dark a <html>.
+      3. Si es "system" → escucha prefers-color-scheme del SO.
+      4. El resto de la app hereda el tema instantáneamente.
+    -->
+    <script>
+      (function () {
+        var T = localStorage.getItem("theme-preference");
+        var d = document.documentElement;
+
+        function applyDark() {
+          d.classList.add("dark");
+        }
+        function removeDark() {
+          d.classList.remove("dark");
+        }
+
+        if (T === "dark") {
+          applyDark();
+        } else if (T === "light") {
+          removeDark();
+        } else {
+          // "dark" por defecto (estética futurista); null → oscuro
+          applyDark();
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

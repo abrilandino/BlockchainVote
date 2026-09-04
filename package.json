@@ -1,0 +1,25 @@
+{
+  "name": "sistema-electoral-web3",
+  "version": "2.0.0",
+  "description": "PoC Sistema Electoral — Security-Hardened con OpenZeppelin",
+  "private": true,
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test contracts/test/Votacion.test.js",
+    "test:coverage": "npx hardhat coverage",
+    "deploy:local": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "npx hardhat run scripts/deploy.js --network sepolia",
+    "verify:sepolia": "npx hardhat verify --network sepolia",
+    "node": "npx hardhat node",
+    "slither": "slither . --checklist"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "dotenv": "^16.6.1"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "chai": "^4.3.7",
+    "hardhat": "^2.22.0"
+  }
+}

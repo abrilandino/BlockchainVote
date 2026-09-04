@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =======================================================================
+   SOLANA BREAKPOINT DESIGN SYSTEM
+   Negro puro #020205 + radial glows purple/cyan/green + glassmorphism
+   ======================================================================= */
+
+@layer base {
+  :root {
+    /* Light mode */
+    --color-bg: #EEF1F8;
+    --color-base: #EEF1F8;
+    --color-sidebar: #12141C;
+    --color-sidebar-muted: #9AA3B5;
+    --color-surface: #FFFFFF;
+    --color-surface-elevated: #FFFFFF;
+    --color-border: rgba(10, 12, 20, 0.08);
+    --color-text: #14161F;
+    --color-text-muted: #5A6172;
+    --color-brand-primary: #7A2FE0;
+    --color-brand-accent: #0EB77F;
+    --color-brand-cyan: #00A5B3;
+  }
+
+  .dark {
+    --color-bg: #020205;
+    --color-base: #020205;
+    --color-sidebar: #06060A;
+    --color-sidebar-muted: #8E8EA8;
+    --color-surface: #0A0A10;
+    --color-surface-elevated: #0F1018;
+    --color-border: rgba(255, 255, 255, 0.07);
+    --color-text: #FFFFFF;
+    --color-text-muted: #8E8EA8;
+    --color-brand-primary: #9945FF;
+    --color-brand-accent: #14F195;
+    --color-brand-cyan: #00F0FF;
+  }
+
+  html {
+    transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-text);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Solana-style radial glows: purple top-center, cyan right, green bottom-left */
+  .dark body {
+    background-image:
+      radial-gradient(circle at 50% -20%, rgba(153, 69, 255, 0.35), transparent 70%),
+      radial-gradient(circle at 100% 60%, rgba(0, 240, 255, 0.12), transparent 50%),
+      radial-gradient(circle at 0% 80%, rgba(20, 241, 149, 0.1), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-accent;
+  }
+}
+
+/* =======================================================================
+   COMPONENT CLASSES
+   ======================================================================= */
+@layer components {
+  /* Tarjeta glass Solana */
+  .card-theme {
+    @apply bg-surface-light dark:bg-[rgba(255,255,255,0.02)] dark:backdrop-blur-xl
+           border border-border-light dark:border-[rgba(255,255,255,0.07)]
+           rounded-2xl shadow-sm
+           dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]
+           transition-colors duration-200 ease-theme-switch;
+  }
+
+  /* Tarjeta elevada: glass + hairline superior púrpura + glow */
+  .card-elevated {
+    @apply bg-surface-light dark:bg-[rgba(255,255,255,0.02)] dark:backdrop-blur-xl
+           border border-border-light dark:border-[rgba(255,255,255,0.07)]
+           rounded-2xl shadow-md
+           dark:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.9)]
+           transition-all duration-300 ease-theme-switch;
+    position: relative;
+    overflow: hidden;
+  }
+  .dark .card-elevated::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #9945FF, #00F0FF, transparent);
+    opacity: 0.7;
+  }
+  .dark .card-elevated:hover {
+    border-color: rgba(0, 240, 255, 0.25);
+    box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.9), 0 0 40px -15px rgba(153, 69, 255, 0.3);
+  }
+
+  /* Texto principal */
+  .text-theme {
+    @apply text-text-light dark:text-text-dark;
+  }
+
+  /* Texto muted */
+  .text-theme-muted {
+    @apply text-text-muted-light dark:text-text-muted-dark;
+  }
+
+  /* Texto con gradiente Solana (títulos) */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #FFFFFF 30%, #9945FF 70%, #00F0FF 100%);
+  }
+
+  /* Botón primario: gradiente púrpura con glow */
+  .btn-primary {
+    @apply text-white font-semibold px-6 py-2.5 rounded-xl
+           transition-all duration-300 ease-theme-switch
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(90deg, #9945FF, #6E33D8);
+    box-shadow: 0 0 30px rgba(153, 69, 255, 0.3);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(90deg, #B06AFF, #8A44F0);
+    box-shadow: 0 0 50px rgba(153, 69, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* Botón outline glass */
+  .btn-outline {
+    @apply font-semibold px-6 py-2.5 rounded-xl text-white
+           transition-all duration-300 ease-theme-switch
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+  }
+  .btn-outline:hover:not(:disabled) {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Botón acento: verde neón con glow verde */
+  .btn-accent {
+    @apply font-semibold px-6 py-2.5 rounded-xl text-[#000000]
+           transition-all duration-300 ease-theme-switch;
+    background: linear-gradient(135deg, #14F195, #0BCE80);
+    box-shadow: 0 0 24px -6px rgba(20, 241, 149, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .btn-accent:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 0 34px -4px rgba(20, 241, 149, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
+  /* Badge acento (verde neón) */
+  .badge-accent {
+    @apply bg-brand-accent text-[#000000]
+           text-xs font-bold px-2.5 py-0.5 rounded-full
+           shadow-[0_0_14px_-2px_rgba(20,241,149,0.5)];
+  }
+
+  /* Input adaptativo estilo glass */
+  .input-theme {
+    @apply w-full rounded-xl px-4 py-2.5 mb-3
+           bg-surface-light dark:bg-[rgba(255,255,255,0.03)]
+           border border-border-light dark:border-[rgba(255,255,255,0.08)]
+           text-text-light dark:text-text-dark
+           placeholder-text-muted-light dark:placeholder-text-muted-dark
+           focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary/50
+           transition-colors duration-200 ease-theme-switch
+           disabled:opacity-50;
+  }
+
+  /* Scrollbar púrpura en modo oscuro */
+  .dark ::-webkit-scrollbar { width: 10px; height: 10px; }
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(153, 69, 255, 0.25);
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover { background: rgba(153, 69, 255, 0.45); background-clip: content-box; border: 3px solid transparent; }
+  .dark ::-webkit-scrollbar-track { background: transparent; }
+}
